@@ -16,10 +16,10 @@ public class DemoApplication {
     private static String hos_code = "871958";     //医院id
     private static String dep_id = "379";          //医院的总疫苗选择页id
     private static String doc_id = "2488";         //医院的预约疫苗类型的id
-    private static String pat_id = "123456";       //就诊人信息id
-    private static String user_id = "123456";      //滇医通登录用户id
-    private static String Authorization = "DYT eyJhbGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjW0MTU4MTQsInN1YnNjcmliZSI6MCwiZHpqX3N1YnWjcmliZSI6MCwib3BlbmlkIjoib19VWzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTUwOTQ4NiwiaWF0IjoxNjQ5NTAzODg2fQ.t6ZrtfpueUsaOXdmjgF7A8pWo9lAtfCsvc70mVObsR8";      //滇医通的登录认证
-    private static String x_uuid = "122D53C168578A9A7CEAB83FA7B17BCF";      //滇医通的登录认证
+    private static String pat_id = "1111111";       //就诊人信息id
+    private static String user_id = "1111111";      //滇医通登录用户id
+    private static String Authorization = "DYT eyJhbGciOiJIUzI1NiW9.eyJ3ZWNoYXRfaWQiOjQ0MTU4MTQsInW1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZWI6MCwib3BlbmlkIjoib19VWzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTUyNDQzOSwiaWF0IjoxNjQ5NTE4ODM5fQ.jjb_fN7FimScVtL8moTeyHqEWbyHLbaKhmAaW4gaAJc";      //滇医通的登录认证
+    private static String x_uuid = " DCW7472807CD3951507515C7B5C03B9F";      //滇医通的登录认证
 
     public static void main(String[] args) throws IOException {
 
@@ -47,7 +47,7 @@ public class DemoApplication {
             System.out.println("==============================================================================");
 
             //显示打印+疫苗号源列表遍历,从后往前遍历（抢），增加抢到概率。
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i = 1; i < jsonArray.size(); i++) {
                 System.out.println("日期：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("sch_date") +
                         "\t时间：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("cate_name") +
                         "\t时段：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("time_type").replace("1", "早上").replace("2", "下午") +
