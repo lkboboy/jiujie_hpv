@@ -59,7 +59,7 @@ public class DemoApplication {
                 if (jsonArray.getJSONObject(jsonArray.size()-i).getString("src_num") != "0") {
 
                     //尝试提交，如果提交成功，退出wile，程序结束！如果过时段没提示抢到成功请手动关闭程序！
-                    if (Get(jsonArray.getJSONObject(jsonArray.size()-i).getString("schedule_id"), jsonArray.getJSONObject(jsonArray.size()-i).getString("sch_date"), jsonArray.getJSONObject(jsonArray.size()-i).getString("time_type")) == true) {
+                    if (Get(jsonArray.getJSONObject(jsonArray.size()-i).getString("schedule_id"), jsonArray.getJSONObject(jsonArray.size()-i).getString("sch_date"), jsonArray.getJSONObject(jsonArray.size()-i).getString("time_type"))) {
                         System.out.println("预约成功！");
                         break;
                     }
@@ -123,8 +123,7 @@ public class DemoApplication {
         Response response = client.newCall(request).execute();
         String tempResponse = response.body().string();
         JSONObject json = JSONObject.parseObject(tempResponse);
-        JSONArray jsonArray = JSONArray.fromObject(json.getJSONArray("msg"));
-        if (jsonArray.getJSONArray(0).equals("预约成功")) {
+        if (json.getString("msg").equals("预约成功")) {
             return true;
         }
         return false;
