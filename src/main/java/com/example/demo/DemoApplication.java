@@ -15,64 +15,64 @@ public class DemoApplication {
     //基本参数，自行Fiddler抓包分析获取，必要！
     private static String hos_code = "871958";     //医院id
     private static String dep_id = "379";          //医院的总疫苗选择页id
-    private static String doc_id = "2488";         //医院的预约疫苗类型的id
-    private static String pat_id = "1111111";       //就诊人信息id
-    private static String user_id = "1111111";      //滇医通登录用户id
-    private static String Authorization = "DYT eyJhbGciOiJiUzI1NiW9.eyJ3ZWNoYXRfaWQiOjQ0MTU4MTQsInW1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZWI6MCwib3BlbmlkIjoib19VWzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTUyNDQzOSwiaWF0IjoxNjQ5NTE4ODM5fQ.jjb_fN7FimScVtL8moTeyHqEWbyHLbaKhmAaW4gaAJc";      //滇医通的登录认证
-    private static String x_uuid = " DCW7472807CD3951507515C7B5C03B9F";      //滇医通的登录认证
+    private static String doc_id = "1334";         //医院的预约疫苗类型的id
+    private static String pat_id = "20964209";       //就诊人信息id
+    private static String user_id = "3525061";      //滇医通登录用户id
+    private static String Authorization = "DYT eyJhbGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjQ0MTU4MTQsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoib19VMzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTcyNjY0MiwiaWF0IjoxNjQ5NzIxMDQyfQ.nRl2jIba9wZju_IxNvfq4-968RWbO7qAIJ64Iyt-SAw";      //滇医通的登录认证
+    private static String x_uuid = "15E4A53D6425DA3BAEB0B8C22D09A7CA";      //滇医通的登录认证
 
     public static void main(String[] args) throws IOException {
 
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url("https://newdytapi.ynhdkc.com/index/schedule?hos_code=" + hos_code +
-                        "&dep_id=" + dep_id +
-                        "&doc_id=" + doc_id )
-                .method("GET", null)
-                .addHeader("Cookie", "acw_tc=2760776e16470724890577588ea7df0ea7204aa757b51b2e59ed3b745302df")
-                .build();
-        Response response = client.newCall(request).execute();
-        //需要中转一下，才能toString出body值
-        String tempResponse = response.body().string();
-        JSONObject json = JSONObject.parseObject(tempResponse);
-        JSONArray jsonArray = JSONArray.fromObject(json.getJSONArray("data"));
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
 
         //while暴力循环监测疫苗号源，程序请在疫苗开枪前30s内开启，请勿长时间使用程序监测号源，避免后台把该接口封死。
         while (true) {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Request request = new Request.Builder()
+                    .url("https://newdytapi.ynhdkc.com/index/schedule?hos_code=" + hos_code +
+                            "&dep_id=" + dep_id +
+                            "&doc_id=" + doc_id)
+                    .method("GET", null)
+                    .addHeader("Cookie", "acw_tc=2760776e16470724890577588ea7df0ea7204aa757b51b2e59ed3b745302df")
+                    .build();
+            Response response = client.newCall(request).execute();
+
+            //需要中转一下，才能toString出body值
+            String tempResponse = response.body().string();
+            JSONObject json = JSONObject.parseObject(tempResponse);
+            JSONArray jsonArray = JSONArray.fromObject(json.getJSONArray("data"));
+
             System.out.println("昆明市妇幼保健院（华山西路院区）- 九价号探测");
             String data = df.format(new Date());
             System.out.println("现在系统时间：" + data);
             System.out.println("==============================================================================");
 
             //显示打印+疫苗号源列表遍历,从后往前遍历（抢），增加抢到概率。
-            for (int i = 1; i < jsonArray.size(); i++) {
-                System.out.println("日期：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("sch_date") +
-                        "\t时间：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("cate_name") +
-                        "\t时段：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("time_type").replace("1", "早上").replace("2", "下午") +
-                        "\t总号源：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("src_max") +
-                        "\t剩余号源：" + jsonArray.getJSONObject(jsonArray.size()-i).getString("src_num")
+            for (int i = 1; i <= jsonArray.size(); i++) {
+                System.out.println("日期：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("sch_date") +
+                        "\t时间：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("cate_name") +
+                        "\t时段：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("time_type").replace("1", "早上").replace("2", "下午") +
+                        "\t总号源：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("src_max") +
+                        "\t剩余号源：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("src_num")
                 );
 
                 //判断以上数组遍历是否存在剩余号源
-                if (jsonArray.getJSONObject(jsonArray.size()-i).getString("src_num") != "0") {
+                if (jsonArray.getJSONObject(jsonArray.size() - i).getString("src_num") != "0") {
 
                     //尝试提交，如果提交成功，退出wile，程序结束！如果过时段没提示抢到成功请手动关闭程序！
-                    if (Get(jsonArray.getJSONObject(jsonArray.size()-i).getString("schedule_id"), jsonArray.getJSONObject(jsonArray.size()-i).getString("sch_date"), jsonArray.getJSONObject(jsonArray.size()-i).getString("time_type"))) {
+                    if (Get(jsonArray.getJSONObject(jsonArray.size() - i).getString("schedule_id"), jsonArray.getJSONObject(jsonArray.size() - i).getString("sch_date"), jsonArray.getJSONObject(jsonArray.size() - i).getString("time_type"))) {
                         System.out.println("预约成功！");
                         break;
                     }
                 }
-
-                //生成jar包，挂机，dos下刷屏显示用的！
-//                System.out.println("==============================================================================");
+            }
+            System.out.println("==============================================================================");
+            //生成jar包，挂机，dos下刷屏显示用的！
 //                new ProcessBuilder("cmd", "/c", "cls")
 //                        .inheritIO()
 //                        .start()
 //                        .waitFor(); // 清屏命令
-            }
-
         }
     }
 
