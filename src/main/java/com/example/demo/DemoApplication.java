@@ -23,45 +23,58 @@ public class DemoApplication {
 
     public static void main(String[] args) throws IOException {
 
+        //提前声明，优化重复赋值
+        Request request;
+        Response response;
+        String tempResponse;
+        JSONObject json;
+        JSONArray jsonArray;
+
+        int jsonArraySize;
+        int j;
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        request = new Request.Builder()
+                .url("https://newdytapi.ynhdkc.com/index/schedule?hos_code=" + hos_code +
+                        "&dep_id=" + dep_id +
+                        "&doc_id=" + doc_id)
+                .method("GET", null)
+                .addHeader("Cookie", "acw_tc=2760776e16470724890577588ea7df0ea7204aa757b51b2e59ed3b745302df")
+                .build();
 
         //while暴力循环监测疫苗号源，程序请在疫苗开枪前30s内开启，请勿长时间使用程序监测号源，避免后台把该接口封死。
         while (true) {
-            OkHttpClient client = new OkHttpClient().newBuilder()
-                    .build();
-            Request request = new Request.Builder()
-                    .url("https://newdytapi.ynhdkc.com/index/schedule?hos_code=" + hos_code +
-                            "&dep_id=" + dep_id +
-                            "&doc_id=" + doc_id)
-                    .method("GET", null)
-                    .addHeader("Cookie", "acw_tc=2760776e16470724890577588ea7df0ea7204aa757b51b2e59ed3b745302df")
-                    .build();
-            Response response = client.newCall(request).execute();
+
+            response = client.newCall(request).execute();
 
             //需要中转一下，才能toString出body值
-            String tempResponse = response.body().string();
-            JSONObject json = JSONObject.parseObject(tempResponse);
-            JSONArray jsonArray = JSONArray.fromObject(json.getJSONArray("data"));
+            tempResponse = response.body().string();
+            json = JSONObject.parseObject(tempResponse);
+            jsonArray = JSONArray.fromObject(json.getJSONArray("data"));
+            jsonArraySize = jsonArray.size();    //优化for循环的重复计算，减少遍历时间。
 
             System.out.println("昆明市妇幼保健院（华山西路院区）- 九价号探测");
-            String data = df.format(new Date());
-            System.out.println("现在系统时间：" + data);
+            System.out.println("现在系统时间：" + df.format(new Date()));
             System.out.println("==============================================================================");
 
+
             //显示打印+疫苗号源列表遍历,从后往前遍历（抢），增加抢到概率。
-            for (int i = 1; i <= jsonArray.size(); i++) {
-                System.out.println("日期：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("sch_date") +
-                        "\t时间：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("cate_name") +
-                        "\t时段：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("time_type").replace("1", "早上").replace("2", "下午") +
-                        "\t总号源：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("src_max") +
-                        "\t剩余号源：" + jsonArray.getJSONObject(jsonArray.size() - i).getString("src_num")
+            for (int i = 1; i <= jsonArraySize; i++) {
+                j = jsonArraySize - i; //优化for循环的重复计算，减少遍历时间。
+                System.out.println("日期：" + jsonArray.getJSONObject(j).getString("sch_date") +
+                        "\t时间：" + jsonArray.getJSONObject(j).getString("cate_name") +
+                        "\t时段：" + jsonArray.getJSONObject(j).getString("time_type").replace("1", "早上").replace("2", "下午") +
+                        "\t总号源：" + jsonArray.getJSONObject(j).getString("src_max") +
+                        "\t剩余号源：" + jsonArray.getJSONObject(j).getString("src_num")
                 );
 
                 //判断以上数组遍历是否存在剩余号源
-                if (jsonArray.getJSONObject(jsonArray.size() - i).getString("src_num") != "0") {
+                if (jsonArray.getJSONObject(j).getString("src_num") != "0") {
 
                     //尝试提交，如果提交成功，退出wile，程序结束！如果过时段没提示抢到成功请手动关闭程序！
-                    if (Get(jsonArray.getJSONObject(jsonArray.size() - i).getString("schedule_id"), jsonArray.getJSONObject(jsonArray.size() - i).getString("sch_date"), jsonArray.getJSONObject(jsonArray.size() - i).getString("time_type"))) {
+                    if (Get(jsonArray.getJSONObject(j).getString("schedule_id"), jsonArray.getJSONObject(j).getString("sch_date"), jsonArray.getJSONObject(j).getString("time_type"))) {
                         System.out.println("预约成功！");
                         break;
                     }
