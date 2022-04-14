@@ -13,9 +13,9 @@ import java.util.Date;
 public class DemoApplication {
 
     //基本参数，自行Fiddler抓包分析获取，必要！
-    private static String hos_code = "872003";     //医院id
-    private static String dep_id = "752";          //医院的总疫苗选择页id
-    private static String doc_id = "2711";         //医院的预约疫苗类型的id
+    private static String hos_code = "871958";     //医院id
+    private static String dep_id = "379";          //医院的总疫苗选择页id
+    private static String doc_id = "1334";         //医院的预约疫苗类型的id
     private static String pat_id = "123345";       //就诊人信息id
     private static String user_id = "12345";      //滇医通登录用户id
     private static String Authorization = "DYT 11111111111.eyJ3ZWNoYXRfaWQiOjQ0MTU4MTQsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoib19VMzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTcyNjY0MiwiaWF0IjoxNjQ5NzIxMDQyfQ.nRl2jIba9wZju_IxNvfq4-968RWbO7qAIJ64Iyt-SAw";      //滇医通的登录认证
@@ -53,7 +53,7 @@ public class DemoApplication {
             json = JSONObject.parseObject(tempResponse);
             jsonArray = JSONArray.fromObject(json.getJSONArray("data"));
             jsonArraySize = jsonArray.size();    //优化for循环的重复计算，减少遍历时间。
-            System.out.println("关上街道社区卫生服务中心（疫苗）- 九价号探测");
+            System.out.println("昆明市妇幼保健院(华山西路院区)-疫苗- 九价号探测");
             System.out.println("现在系统时间：" + df.format(new Date()));
             System.out.println("==============================================================================");
             System.out.println(tempResponse);
@@ -70,7 +70,6 @@ public class DemoApplication {
 
                 //判断以上数组遍历是否存在剩余号源
                 if (Integer.parseInt(jsonArray.getJSONObject(j).getString("src_num")) != 0) {
-
                     //尝试提交，如果提交成功，退出wile，程序结束！如果过时段没提示抢到成功请手动关闭程序！
                     if (Get(jsonArray.getJSONObject(j).getString("schedule_id"), jsonArray.getJSONObject(j).getString("sch_date"), jsonArray.getJSONObject(j).getString("time_type"))) {
                         break;
@@ -93,10 +92,10 @@ public class DemoApplication {
         MediaType mediaType = MediaType.parse(" application/json");
         RequestBody body = RequestBody.create(mediaType, "{" +
                 "\"doc_name\": \"九价宫颈癌疫苗\"," +
-                "\"hos_name\": \"关上街道社区卫生服务中心（疫苗）\"," +
+                "\"hos_name\": \"昆明市妇幼保健院(华山西路院区)-疫苗\"," +
                 "\"hos_code\": " + "\"" + hos_code + "\"," +                                 //医院id
                 "\"dep_name\": \"疫苗接种预约\"," +
-                "\"level_name\": \"\"," +
+                "\"level_name\": \"疫苗\"," +
                 "\"dep_id\": " + "\"" + dep_id + "\"," +                                       //医院的总疫苗选择页id
                 "\"doc_id\": " + "\"" + doc_id + "\"," +                                       //医院的预约疫苗类型的id
                 "\"pat_id\": " + "\"" + pat_id + "\"," +                                       //就诊人信息id
