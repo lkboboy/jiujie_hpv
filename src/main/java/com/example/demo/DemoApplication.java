@@ -85,7 +85,7 @@ public class DemoApplication {
         }
     }
 
-    //抢九价疫苗，已拼接,换医院的话 改哈doc_name、doc_name 2个字段，其他不变！
+    //抢九价疫苗，已拼接,换医院的话 改哈doc_name、hos_name 2个字段，其他不变，level_name字段页面 疫苗接种预约|  后面是否有 疫苗 两个字！
     public static boolean Get(String schedule_id, String sch_date, String time_type) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
