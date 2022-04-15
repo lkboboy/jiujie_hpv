@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import net.sf.json.JSONArray;
 import okhttp3.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -17,9 +18,13 @@ public class DemoApplication {
     private static String dep_id = "379";          //医院的总疫苗选择页id
     private static String doc_id = "1334";         //医院的预约疫苗类型的id
     private static String pat_id = "123345";       //就诊人信息id
-    private static String user_id = "12345";      //滇医通登录用户id
+    private static String user_id = "12345";       //滇医通登录用户id
     private static String Authorization = "DYT 11111111111.eyJ3ZWNoYXRfaWQiOjQ0MTU4MTQsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoib19VMzZzeUxJQm12bF9pZm5HWkF3S0wya1ZFYyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXN3SW9WdFNKd29qQ1pibDczLWd1VSIsImR6al9vcGVuaWQiOiIiLCJ1c2VyX2lkIjozNTI1MDYxLCJ3ZWNoYXRfb3Blbl9pZCI6Im9fVTM2c3lMSUJtdmxfaWZuR1pBd0tMMmtWRWMiLCJ1bmlvbl9pZCI6Im9OUXo0MFJBYlNPRjhQcUlndERFc3VSWkFmNzAiLCJtb2NrX29wZW5pZCI6ZmFsc2UsIm1pbmlfb3BlbmlkIjoib2lBNFA1SklNQzZYMjNPSUlrcHkweWJpdDN4QSIsImV4cCI6MTY0OTcyNjY0MiwiaWF0IjoxNjQ5NzIxMDQyfQ.nRl2jIba9wZju_IxNvfq4-968RWbO7qAIJ64Iyt-SAw";      //滇医通的登录认证
     private static String x_uuid = "1111111111111111111";      //滇医通的登录认证
+
+    private static boolean start = true;    //wile保险，怕重复提交表单
+    private static Integer countI = 0;      //预约失败计次
+    private static Integer countJ = 5;      //预约失败5次自动退出
 
     public static void main(String[] args) throws IOException {
 
@@ -33,11 +38,12 @@ public class DemoApplication {
         int jsonArraySize;
         int j;
 
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
 
 
         //while暴力循环监测疫苗号源，程序请在疫苗开枪前30s内开启，请勿长时间使用程序监测号源，避免后台把该接口封死。
-        while (true) {
+        while (start) {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
             request = new Request.Builder()
@@ -69,11 +75,12 @@ public class DemoApplication {
                 );
 
                 //判断以上数组遍历是否存在剩余号源
-                if (Integer.parseInt(jsonArray.getJSONObject(j).getString("src_num")) != 0) {
-                    //尝试提交，如果提交成功，退出wile，程序结束！如果过时段没提示抢到成功请手动关闭程序！
-                    if (Get(jsonArray.getJSONObject(j).getString("schedule_id"), jsonArray.getJSONObject(j).getString("sch_date"), jsonArray.getJSONObject(j).getString("time_type"))) {
-                        break;
-                    }
+                if (Integer.parseInt(jsonArray.getJSONObject(j).getString("src_num")) == 0) {
+
+                    //尝试提交，如果提交成功，退出wile，程序结束！
+                    Get(jsonArray.getJSONObject(j).getString("schedule_id"), jsonArray.getJSONObject(j).getString("sch_date"), jsonArray.getJSONObject(j).getString("time_type"));
+                    break;
+
                 }
             }
             System.out.println("==============================================================================");
@@ -85,7 +92,7 @@ public class DemoApplication {
         }
     }
 
-    //抢九价疫苗，已拼接,换医院的话 改哈doc_name、doc_name 2个字段，其他不变！
+    //抢九价疫苗，已拼接,换医院的话 改哈doc_name、hos_name 2个字段，其他不变，level_name字段页面 “疫苗接种预约|  ” 后面是否有 “疫苗” 两个字！
     public static boolean Get(String schedule_id, String sch_date, String time_type) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -134,10 +141,17 @@ public class DemoApplication {
         System.out.println(tempResponse);
         if (json.getString("msg").equals("预约成功")) {
             System.out.println("预约成功！");
+            start = false;
             return true;
+        } else {
+            System.out.println("预约失败！");
+            countI++; //预约失败计次
+            if (countI >= countJ) { //预约失败5次自动退出
+                start = false;
+            }
+            return false;
         }
-        System.out.println("预约失败！");
-        return false;
+
     }
 
 }
