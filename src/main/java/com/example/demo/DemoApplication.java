@@ -75,7 +75,7 @@ public class DemoApplication {
                 );
 
                 //判断以上数组遍历是否存在剩余号源
-                if (Integer.parseInt(jsonArray.getJSONObject(j).getString("src_num")) == 0) {
+                if (Integer.parseInt(jsonArray.getJSONObject(j).getString("src_num")) != 0) {
 
                     //尝试提交，如果提交成功，退出wile，程序结束！
                     Get(jsonArray.getJSONObject(j).getString("schedule_id"), jsonArray.getJSONObject(j).getString("sch_date"), jsonArray.getJSONObject(j).getString("time_type"));
