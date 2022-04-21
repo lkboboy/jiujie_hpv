@@ -5,11 +5,7 @@ import net.sf.json.JSONArray;
 import okhttp3.*;
 import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 @SpringBootApplication
@@ -21,14 +17,15 @@ public class DemoApplication {
     private static String hos_code = "871958";     //医院id
     private static String dep_id = "379";          //医院的总疫苗选择页id
     private static String doc_id = "1334";         //医院的预约疫苗类型的id
-    private static String pat_id = "111111";       //就诊人信息id
-    private static String user_id = "111111";       //滇医通登录用户id
-    private static String Authorization = "DYT eyJhkGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjUxNjA0MjgsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoibzdMQ1g2RzZUV2EzZU11RVZZQ0xqc0RRUHlBSSIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2RzZUV2EzZU11RVZZQ0xqc0RRUHlBSSIsInVzZXJfaWQiOjM2NjU3NjMsIndlY2hhdF9vcGVuX2lkIjoibzdMQ1g2RzZUV2EzZU11RVZZQ0xqc0RRUHlBSSIsInVuaW9uX2lkIjoib05RejQwYmtTYkxPZm5Ld2VHV1BINHdCb1ZjWSIsIm1vY2tfb3BlbmlkIjpmYWxzZSwibWluaV9vcGVuaWQiOiJvaUE0UDVKbWZpdDNyTDdFeWxVVHRLTUhxYWZNIiwiZXhwIjoxNjUwMjQ0Nzg4LCJpYXQiOjE2NTAyMzkxODh9.KzOfKL35LgMVMg7iAQ40KDGYTNsysniWuMjmpDUTNO0";      //滇医通的登录认证
-    private static String x_uuid = "6DC9C68F1A9AE61C33576429BE5BE53E";      //滇医通的登录认证
+    private static String pat_id = "21151484";       //就诊人信息id
+    private static String user_id = "3660250";       //滇医通登录用户id
+    private static String Authorization = "DYT eyJhbGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjUxNTM2NTAsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInVzZXJfaWQiOjM2NjAyNTAsIndlY2hhdF9vcGVuX2lkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInVuaW9uX2lkIjoib05RejQwZnp6RlprUklxcGZlZ3V3UG1UcHY5WSIsIm1vY2tfb3BlbmlkIjpmYWxzZSwibWluaV9vcGVuaWQiOiIiLCJleHAiOjE2NTAyNDM4MzUsImlhdCI6MTY1MDIzODIzNX0";      //滇医通的登录认证
+    private static String x_uuid = "D61EA13E10BD28D07741A836AB65DA35";      //滇医通的登录认证
+    private static String acw_tc = "acw_tc=2760777f16505387202953524e32662f5b2cc00e9bc646cf8e02980418bfad";      //滇医通的登录认证
 
     private static boolean start = true;    //wile保险，怕重复提交表单
     private static Integer countI = 0;      //预约失败计次
-    private static Integer countJ = 5;      //预约失败5次自动退出
+    private static Integer countJ = 0;      //预约失败5次自动退出
 
     public static void main(String[] args) throws IOException {
 
@@ -42,9 +39,7 @@ public class DemoApplication {
         int jsonArraySize;
         int j;
 
-
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
 
         //while暴力循环监测疫苗号源，程序请在疫苗开枪前30s内开启，请勿长时间使用程序监测号源，避免后台把该接口封死。
         while (start) {
@@ -66,9 +61,8 @@ public class DemoApplication {
 
             log.info("昆明市妇幼保健院(华山西路院区)-疫苗- 九价号探测");
 
-            log.info("现在系统时间：" + df.format(new Date()));
-
-            log.info("==============================================================================");
+            //log.info("现在系统时间：" + df.format(new Date()));
+            //log.info("==============================================================================");
 
             log.info(tempResponse);
 
@@ -102,6 +96,7 @@ public class DemoApplication {
 //                        .start()
 //                        .waitFor(); // 清屏命令
         }
+
     }
 
     //抢九价疫苗，已拼接,换医院的话 改哈doc_name、hos_name 2个字段，其他不变，level_name字段页面 “疫苗接种预约|  ” 后面是否有 “疫苗” 两个字！
@@ -111,15 +106,15 @@ public class DemoApplication {
                 .build();
         MediaType mediaType = MediaType.parse(" application/json");
         RequestBody body = RequestBody.create(mediaType, "{" +
-                "\"doc_name\": \"九价宫颈癌疫苗\"," +
+                "\"doc_name\": \"进口九价宫颈癌疫苗\"," +
                 "\"hos_name\": \"昆明市妇幼保健院(华山西路院区)-疫苗\"," +
                 "\"hos_code\": " + "\"" + hos_code + "\"," +                                    //医院id
                 "\"dep_name\": \"疫苗接种预约\"," +
                 "\"level_name\": \"疫苗\"," +
                 "\"dep_id\": " + "\"" + dep_id + "\"," +                                        //医院的总疫苗选择页id
                 "\"doc_id\": " + "\"" + doc_id + "\"," +                                        //医院的预约疫苗类型的id
-                "\"pat_id\": " +  pat_id + "," +                                                //就诊人信息id
-                "\"schedule_id\": "  + schedule_id + "," +                                      //排班id
+                "\"pat_id\": " + pat_id + "," +                                                //就诊人信息id
+                "\"schedule_id\": " + schedule_id + "," +                                      //排班id
                 "\"jz_card\": \"\"," +
                 "\"sch_date\": " + "\"" + sch_date + "\"," +                                    //排班时间
                 "\"time_type\": " + "\"" + time_type + "\"," +                                  //1为早上，2为下午
@@ -146,6 +141,7 @@ public class DemoApplication {
                 .addHeader("Authorization", Authorization)
                 .addHeader("User-Agent", " Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 NetType/WIFI MicroMessenger/7.0.20.1781(0x6700143B) WindowsWechat(0x6305002e)")
                 .addHeader("x-uuid", x_uuid)
+                .addHeader("Cookie", acw_tc)
                 .addHeader("Content-Type", " application/json")
                 .build();
         Response response = client.newCall(request).execute();
@@ -154,7 +150,6 @@ public class DemoApplication {
 
         log.info(tempResponse);
         if (json.getString("msg").equals("预约成功")) {
-
             log.info("预约成功！");
             start = false;
             return true;
