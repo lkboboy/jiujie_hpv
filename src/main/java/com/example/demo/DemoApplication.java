@@ -21,7 +21,7 @@ public class DemoApplication {
     private static String user_id = "3660250";       //滇医通登录用户id
     private static String Authorization = "DYT eyJhbGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjUxNTM2NTAsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjoxLCJuZXdfb3BlbmlkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInVzZXJfaWQiOjM2NjAyNTAsIndlY2hhdF9vcGVuX2lkIjoibzdMQ1g2QXRJd0RIdklFeGQ1cTBTUnFwN1dscyIsInVuaW9uX2lkIjoib05RejQwZnp6RlprUklxcGZlZ3V3UG1UcHY5WSIsIm1vY2tfb3BlbmlkIjpmYWxzZSwibWluaV9vcGVuaWQiOiIiLCJleHAiOjE2NTAyNDM4MzUsImlhdCI6MTY1MDIzODIzNX0";      //滇医通的登录认证
     private static String x_uuid = "D61EA13E10BD28D07741A836AB65DA35";      //滇医通的登录认证
-    private static String acw_tc = "acw_tc=2760777f16505387202953524e32662f5b2cc00e9bc646cf8e02980418bfad";      //滇医通的登录认证
+    private static String acw_tc = "acw_tc=2760777f16505387202953524e32662f5b2cc00e9bc646cf8e02980418bfad";      //浏览器Cookie
 
     private static boolean start = true;    //wile保险，怕重复提交表单
     private static Integer countI = 0;      //预约失败计次
@@ -50,6 +50,7 @@ public class DemoApplication {
                             "&dep_id=" + dep_id +
                             "&doc_id=" + doc_id)
                     .method("GET", null)
+                    .addHeader("Cookie", "acw_tc=2760825516506298674857813e69dd1dacbceb299c996a6134b89a6623595b")
                     .build();
             response = client.newCall(request).execute();
 
