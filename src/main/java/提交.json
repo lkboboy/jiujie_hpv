@@ -1,0 +1,18 @@
+POST https://dytapi.ynhdkc.com/v1/appoint?hos_code=871908&dep_id=1063&doc_id=3798&pat_id=22191585&user_id=3812265&schedule_id=1634295&cate_name= HTTP/1.1
+Host: dytapi.ynhdkc.com
+Connection: keep-alive
+Content-Length: 422
+Accept: application/json, text/plain, */*
+Authorization: DYT eyJhbGciOiJIUzI1NiJ9.eyJ3ZWNoYXRfaWQiOjUzMzAyNDEsInN1YnNjcmliZSI6MCwiZHpqX3N1YnNjcmliZSI6MCwib3BlbmlkIjoib19VMzZzejYtc0l5QmszQ1VzNnYtRXpLOW9MQSIsInRoaXJkX3VzZXJfaWQiOiIiLCJpc3MiOiJkeXQiLCJuZXdfc3Vic2NyaWJlIjowLCJuZXdfb3BlbmlkIjoiIiwiZHpqX29wZW5pZCI6IiIsInVzZXJfaWQiOjM4MTIyNjUsIndlY2hhdF9vcGVuX2lkIjoib19VMzZzejYtc0l5QmszQ1VzNnYtRXpLOW9MQSIsInVuaW9uX2lkIjoib05RejQwWG80WktTOFViMzZzOG1Ma0ktTTRhcyIsIm1vY2tfb3BlbmlkIjpmYWxzZSwibWluaV9vcGVuaWQiOiJvaUE0UDVDNVRKaXlJWEptT2ptb1JXQ0tMbWxrIiwiZXhwIjoxNjY3NDU4NDE5LCJpYXQiOjE2Njc0NTI4MTl9.RMva7iPTLqV-goStJtxFtmPLjhbY3cvby-e1ZLT-774
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 MicroMessenger/7.0.9.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat
+x-uuid: 96A772EA12987A3BEE5290838920BE4B
+Content-Type: application/json
+Sec-Fetch-Site: same-site
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://appv2.ynhdkc.com/registration_order_confirm
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-us,en
+Cookie: _ga=GA1.2.93876309.1667452550; _gid=GA1.2.842777932.1667452550; acw_tc=2760776f16674529881496790e676c75d6086962e61a502b8d4164871ef8ad
+
+{"doc_name":"进口成人流感疫苗","hos_name":"昆明市第一人民医院北院(甘美医院)-疫苗","hos_code":"871908","dep_name":"成人疫苗预约","level_name":"","dep_id":"1063","doc_id":"3798","pat_id":22191585,"schedule_id":1634295,"jz_card":"","sch_date":"2022-11-04","time_type":"1","info":"","ghf":0,"zlf":0,"zjf":0,"jz_start_time":0,"amt":0,"jz_card_type":0,"queue_sn_id":"","wechat_login":"dytminiapp"}
